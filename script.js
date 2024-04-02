@@ -2,19 +2,22 @@ let loc = "start";
 let shouldBreak = false
 
 // USER VARIABLES
-let userGold = 1
+let userGold = 99999999999999
 let userWeapon = "Dřevěný Meč"
+let userWeaponTier = 0;
 let userDmg = "2-5"
 let userHP = 100
+let userArmor = "Žádný"
+let userArmorTier = 0;
 
 // SHOP VARIABLES
 let shopBan = false;
 let shopWeapon = ""
-let shopWeaponPrice = ""
-let userWeaponTier = 0;
-let shopWeaponDmg = 0;
-let userArmorTier = 0;
-let shopArmorTier = userArmorTier + 1;
+let shopWeaponPrice = 0
+let shopWeaponDmg = "";
+let shopArmor = ""
+let shopArmorPrice = 0;
+let shopArmorHealth = 0;
 
 function weaponRNG(weapon1, weapon2) {
     let nahodneCislo = Math.random()
@@ -147,33 +150,43 @@ while (true) {
                             switch(shopWeapon) {
                                 case "Bronzový Meč":
                                     userDmg = "3-10"
+                                    userWeaponTier = 1
                                     break
                                 case "Zlatý Meč":
                                     userDmg = "5-15"
+                                    userWeaponTier = 2
                                     break
                                 case "Železný Meč":
                                     userDmg = "6-20"
+                                    userWeaponTier = 3
                                     break
                                 case "Ocelový Meč":
                                     userDmg = "9-25"
+                                    userWeaponTier = 4
                                     break
                                 case "Diamantový Meč":
                                     userDmg = "10-30"
+                                    userWeaponTier = 5
                                     break
                                 case "Stormyxový Meč":
                                     userDmg = "15-40"
+                                    userWeaponTier = 6
                                     break
                                 case "Mythrilový Meč":
                                     userDmg = "20-50"
+                                    userWeaponTier = 7
                                     break
                                 case "Adamantiový Meč":
                                     userDmg = "25-75"
+                                    userWeaponTier = 8
                                     break
                                 case "Orichalcový Meč":
                                     userDmg = "45-90"
+                                    userWeaponTier = 9
                                     break
                                 case "Nebeský Meč":
                                     userDmg = "60-100"
+                                    userWeaponTier = 10
                                     break
                             }
                             console.log("Nyní máš na svém opasku, připravený k boji " + userWeapon + ". S útočnou silou " + userDmg + " dmg.")
@@ -200,10 +213,152 @@ while (true) {
 
                 // ARMOR OFFERS
                 case "2":
-                    loc = "armorShop"
+                    console.log("Potřebujete nějaké brnění? Milostivý zákazníku. Hned vám něco skvělého najdu...")
+                    console.log("Noo jo! Tato zbroj je pro vás jako vyšitá. Co na ni říkáte?")
+                    console.log("")
+                    switch(userArmorTier) {
+                        case 0:
+                            shopArmor = "Kožené Brnění"
+                            shopArmorHealth = 50;
+                            shopArmorPrice = 50;
+                            break
+                        case 1:
+                            shopArmor = "Řetězové Brnění"
+                            shopArmorHealth = 100
+                            shopArmorPrice = 100
+                            break
+                        case 2:
+                            shopArmor = "Železné Brnění"
+                            shopArmorHealth = 175
+                            shopArmorPrice = 250
+                            break
+                        case 3:
+                            shopArmor = "Ocelové Brnění"
+                            shopArmorHealth = 250
+                            shopArmorPrice = 1500
+                            break
+                        case 4:
+                            shopArmor = "Diamantové Brnění"
+                            shopArmorHealth = 325
+                            shopArmorPrice = 5000
+                            break
+                        case 5:
+                            shopArmor = "Stormyxové Brnění"
+                            shopArmorHealth = 450
+                            shopArmorPrice = 15000
+                            break
+                        case 6:
+                            shopArmor = "Mythrilové Brnění"
+                            shopArmorHealth = 600
+                            shopArmorPrice = 40000
+                            break
+                        case 7:
+                            shopArmor = "Adamantiové Brnění"
+                            shopArmorHealth = 700
+                            shopArmorPrice = 100000
+                            break
+                        case 8:
+                            shopArmor = "Orichalcové Brnění"
+                            shopArmorHealth = 800
+                            shopArmorPrice = 150000
+                            break
+                        case 9:
+                            shopArmor = "Nebeské Brnění"
+                            shopArmorHealth = 1000
+                            shopArmorPrice = 200000
+                            break
+                    }
+                    console.log("Konstantin ti nabízí ... " + shopArmor + ". Chceš si koupit " + shopArmor + " za " + shopArmorPrice + " zlatých?")
+                    console.log(shopArmor + " ti přidává " + shopArmorHealth + " životů.")
+                    console.log("")
+
+                    // ARMOR BUYING
+                    let purchaseArmor = prompt("Koupit brnění? [1 - ano, 2 - ne]")
+                    if (purchaseArmor === "1") {
+
+                        // SUCCESFULL PURCHASE
+                        if (userGold >= shopArmorPrice) {
+                            userGold = userGold - shopArmorPrice
+                            console.log("Děkuji, děkuji za koupi. Milostný zákazníku. Přijďte zase někdy příště!")
+                            console.log("Prohlížíš si svoje nově koupené brnění. Ihned ho vyměníš za svoje staré.")
+                            userArmor = shopArmor
+                            switch(shopArmor) {
+                                case "Kožené Brnění":
+                                    userDmg = "3-10"
+                                    userHP = 100 + 50
+                                    userArmorTier = 1
+                                    break
+                                case "Řetězové Brnění":
+                                    userDmg = "5-15"
+                                    userHP = 100 + 100
+                                    userArmorTier = 2
+                                    break
+                                case "Železné Brnění":
+                                    userDmg = "6-20"
+                                    userHP = 100 + 175
+                                    userArmorTier = 3
+                                    break
+                                case "Ocelové Brnění":
+                                    userDmg = "9-25"
+                                    userHP = 100 + 250
+                                    userArmorTier = 4
+                                    break
+                                case "Diamantové Brnění":
+                                    userDmg = "10-30"
+                                    userHP = 100 + 325
+                                    userArmorTier = 5
+                                    break
+                                case "Stormyxové Brnění":
+                                    userDmg = "15-40"
+                                    userHP = 100 + 450
+                                    userArmorTier = 6
+                                    break
+                                case "Mythrilové Brnění":
+                                    userDmg = "20-50"
+                                    userHP = 100 + 600
+                                    userArmorTier = 7
+                                    break
+                                case "Adamantiové Brnění":
+                                    userDmg = "25-75"
+                                    userHP = 100 + 700
+                                    userArmorTier = 8
+                                    break
+                                case "Orichalcové Brnění":
+                                    userDmg = "45-90"
+                                    userHP = 100 + 800
+                                    userArmorTier = 9
+                                    break
+                                case "Nebeské Brnění":
+                                    userDmg = "60-100"
+                                    userHP = 100 + 1000
+                                    userArmorTier = 10
+                                    break
+                            }
+                            console.log("Nyní máš na sobě, připravené k boji, svoje nové " + userArmor + ". Máš teď " + userHP + " životů.")
+                            console.log("")
+                            alert("Zmáčkni Enter pro pokračování.")
+                            loc = "spawn"
+
+                        // NOT ENOUGH GOLD    
+                        } else {
+                            console.log("Nemáš dostatek peněz! Snažíš se mě podvést?! Mazej pryč! Než ti zakážu vstup na doživotí!!!")
+                            console.log("")
+                            alert("Zmáčkni Enter pro pokračování.")
+                            loc = "spawn"
+                        }
+
+                    // NOT BUYING
+                    } else {
+                        console.log("Jak myslíš teda.. Pokud si to rozmyslíš, neváhej přijít zase!")
+                        console.log("")
+                        alert("Zmáčkni Enter pro pokračování.")
+                        loc = "spawn"
+                    }
                     continue
+
+                // STEALING ATTEMPT
                 case "3":
-                    console.log("Jakmile přijde další zákazník a pozornost Konstantina přejde jinam,")
+                    console.log("Jakmile přijde další zákazník a pozornost Konstantina přejde jinam:");
                     console.log("ihned to otočíš k pultu se třpytivými meči a začneš zkoumat co by se hodilo nejvíc.")
                     console.log("Než se ti podaří něco ukrást, tak se spustí alarm.")
                     console.log('Okamžitě tě vyhodí ven. „A už se sem nevracej!"')
@@ -216,6 +371,8 @@ while (true) {
                     console.log("Špatná odpověď.")
                     break
             }
+
+        // GG UNLUCKY
         } else if (shopBan === true) {
             console.log('Zastaví tě dva nabušení muži v černém. „Kampak, kampak? Zloději jeden."')
             console.log("Ihned tě vyrazí. Asi si neměl zkoušet okrást Konstantina...")
@@ -238,43 +395,6 @@ while (true) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 } 
 // credit: matěj - název brány
+// vyřešit tier 10 kupování
