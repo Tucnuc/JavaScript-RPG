@@ -2,13 +2,17 @@ let loc = "start";
 let shouldBreak = false
 
 // USER VARIABLES
+let name = ""
 let userGold = 99999999999999
 let userWeapon = "Dřevěný Meč"
 let userWeaponTier = 0;
 let userDmg = "2-5"
 let userHP = 100
-let userArmor = "Žádný"
+let userMaxHP = 100
+let userArmor = "Žádné"
+let userArmorBonus = 0
 let userArmorTier = 0;
+let userRank = "Začátečník"
 
 // SHOP VARIABLES
 let shopBan = false;
@@ -19,25 +23,23 @@ let shopArmor = ""
 let shopArmorPrice = 0;
 let shopArmorHealth = 0;
 
-function weaponRNG(weapon1, weapon2) {
-    let nahodneCislo = Math.random()
-    if (nahodneCislo < 0.5) {
-        return weapon1
-    } else {
-        return weapon2
-    }
+// RANDOM RANDINT
+function randint(min,max) {
+    let fromZero = min
+    min = 0
+    max -= fromZero
+    return Math.floor(Math.random()*(max+1)) + fromZero
 }
 
-alert("Otevři si konzoli. Pak se můžeš vrhnout do dobrodružství!");
+alert("Otevři si konzoli. Pak se můžeš vrhnout do dobrodružství! [CTRL+SHIFT+C]");
 
 while (true) {
     if (loc === "start") {
-        const name = prompt("Vítej dobroduhu! Sdělíš mi své jméno?");
+        name = prompt("Vítej dobroduhu! Sdělíš mi své jméno?");
         console.log("Zdravím tě, " + name + ". Doufám že si užiješ své dobrodružství!");
         console.log("")
-        loc = "spawn";
-        // break
-    
+        loc = "spawn"
+
     // SPAWN
     } else if (loc === "spawn") {
         console.log("Nacházíš se na spawnu. Rozhlédneš se kolem sebe.")
@@ -47,7 +49,7 @@ while (true) {
         console.log("Porta Magnifica! Magická brána, která tě může udělat silnějším. Drží v sobě nepředstavitelné bohatství.")
         console.log("Ale také spoustu nebezpečí...")
         console.log("")
-        let decision1 = prompt("Kam se chceš vydat? Dobrodruhu. [1 - Obchod, 2 - Fontána, 3 - Brána]")
+        let decision1 = prompt("Kam se chceš vydat? Dobrodruhu. [1 - Obchod, 2 - Fontána, 3 - Brána, 4 - Status]")
         switch(decision1) {
             case "1":
                 loc = "shop"
@@ -57,6 +59,9 @@ while (true) {
                 break
             case "3":
                 loc = "gate"
+                break
+            case "4":
+                loc = "status"
                 break
             default:
                 console.log("Špatná odpověď.")
@@ -284,56 +289,57 @@ while (true) {
                             userArmor = shopArmor
                             switch(shopArmor) {
                                 case "Kožené Brnění":
-                                    userDmg = "3-10"
+                                    userArmorBonus = 50
                                     userHP = 100 + 50
                                     userArmorTier = 1
                                     break
                                 case "Řetězové Brnění":
-                                    userDmg = "5-15"
+                                    userArmorBonus = 100
                                     userHP = 100 + 100
                                     userArmorTier = 2
                                     break
                                 case "Železné Brnění":
-                                    userDmg = "6-20"
+                                    userArmorBonus = 175
                                     userHP = 100 + 175
                                     userArmorTier = 3
                                     break
                                 case "Ocelové Brnění":
-                                    userDmg = "9-25"
+                                    userArmorBonus = 250
                                     userHP = 100 + 250
                                     userArmorTier = 4
                                     break
                                 case "Diamantové Brnění":
-                                    userDmg = "10-30"
+                                    userArmorBonus = 325
                                     userHP = 100 + 325
                                     userArmorTier = 5
                                     break
                                 case "Stormyxové Brnění":
-                                    userDmg = "15-40"
+                                    userArmorBonus = 450
                                     userHP = 100 + 450
                                     userArmorTier = 6
                                     break
                                 case "Mythrilové Brnění":
-                                    userDmg = "20-50"
+                                    userArmorBonus = 600
                                     userHP = 100 + 600
                                     userArmorTier = 7
                                     break
                                 case "Adamantiové Brnění":
-                                    userDmg = "25-75"
+                                    userArmorBonus = 700
                                     userHP = 100 + 700
                                     userArmorTier = 8
                                     break
                                 case "Orichalcové Brnění":
-                                    userDmg = "45-90"
+                                    userArmorBonus = 800
                                     userHP = 100 + 800
                                     userArmorTier = 9
                                     break
                                 case "Nebeské Brnění":
-                                    userDmg = "60-100"
+                                    userArmorBonus = 1000
                                     userHP = 100 + 1000
                                     userArmorTier = 10
                                     break
                             }
+                            userMaxHP = userHP
                             console.log("Nyní máš na sobě, připravené k boji, svoje nové " + userArmor + ". Máš teď " + userHP + " životů.")
                             console.log("")
                             alert("Zmáčkni Enter pro pokračování.")
@@ -380,21 +386,59 @@ while (true) {
             alert("Zmáčkni Enter pro pokračování.")
             loc = "spawn"
         }
-    
+
     // FOUNTAIN
     } else if (loc === "fountain") {
-        console.log("fountain")
-        break
+        console.log("Obklopí tě léčivá magická síla. Všechna tvá únava mizí. Celé tvé tělo se léčí.")
+        let healedHP = userMaxHP - userHP
+        userHP = userMaxHP
+        console.log("Jsi plně vyléčen. Fontána ti vyléčila " + healedHP + " bodů zdraví.")
+        console.log("")
+        alert("Zmáčkni Enter pro pokračování.")
+        loc = "spawn"
+        
+     // STATUS   
+    } else if (loc === "status") {
+        
+        // RANK CHANGE
+        if (userWeaponTier === 10 && userArmorTier === 10) {
+            userRank = "Overlord"
+        } else if (userWeaponTier >= 8 && userArmorTier >= 8) {
+            userRank = "Warlord"
+        } else if (userWeaponTier >= 6 && userArmorTier >= 6) {
+            userRank = "Lord"
+        } else if (userWeaponTier >= 4 && userArmorTier >= 4) {
+            userRank = "Bojovník"
+        } else if (userWeaponTier >= 2 && userArmorTier >= 2) {
+            userRank = "Dobrodruh"
+        }
+        
+        // STATUS LOG
+        console.log("Otevřeš svůj status.")
+        console.log("")
+        console.log("Jméno: " + name)
+        console.log("Hodnost: " + userRank)
+        console.log("Body života: " + userHP + "/" + userMaxHP)
+        console.log("")
+        console.log("Používaná zbraň: " + userWeapon)
+        console.log("Útočná síla: " + userDmg)
+        console.log("Úroveň zbraně: " + userWeaponTier)
+        console.log("")
+        console.log("Používané brnění: " + userArmor)
+        console.log("Bonusové životy: " + userArmorBonus)
+        console.log("Úroveň brnění: " + userArmorTier)
+        console.log("")
+        alert("Zmáčkni Enter pro pokračování.")
+        loc = "spawn"
     
     // GATE
     } else if (loc === "gate") {
         console.log("gate")
         break
     }
+    
+    
 
-
-
-
-} 
-// credit: matěj - název brány
+}
+// credit: matěj - název brány + randint
 // vyřešit tier 10 kupování
