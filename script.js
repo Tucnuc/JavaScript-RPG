@@ -1,5 +1,6 @@
 let loc = "start";
 let shouldBreak = false
+let hardMode = false
 
 // USER VARIABLES
 let name = ""
@@ -7,6 +8,8 @@ let userGold = 99999999999999
 let userWeapon = "Dřevěný Meč"
 let userWeaponTier = 0;
 let userDmg = "2-5"
+let userMinDmg = 2
+let userMaxDmg = 5
 let userHP = 100
 let userMaxHP = 100
 let userArmor = "Žádné"
@@ -23,13 +26,6 @@ let shopArmor = ""
 let shopArmorPrice = 0;
 let shopArmorHealth = 0;
 
-// RANDOM RANDINT
-function randint(min,max) {
-    let fromZero = min
-    min = 0
-    max -= fromZero
-    return Math.floor(Math.random()*(max+1)) + fromZero
-}
 
 alert("Otevři si konzoli. Pak se můžeš vrhnout do dobrodružství! [CTRL+SHIFT+C]");
 
@@ -156,42 +152,62 @@ while (true) {
                                 case "Bronzový Meč":
                                     userDmg = "3-10"
                                     userWeaponTier = 1
+                                    userMinDmg = 3
+                                    userMaxDmg = 10
                                     break
                                 case "Zlatý Meč":
                                     userDmg = "5-15"
                                     userWeaponTier = 2
+                                    userMinDmg = 5
+                                    userMaxDmg = 15
                                     break
                                 case "Železný Meč":
                                     userDmg = "6-20"
                                     userWeaponTier = 3
+                                    userMinDmg = 6
+                                    userMaxDmg = 20
                                     break
                                 case "Ocelový Meč":
                                     userDmg = "9-25"
                                     userWeaponTier = 4
+                                    userMinDmg = 9
+                                    userMaxDmg = 25
                                     break
                                 case "Diamantový Meč":
                                     userDmg = "10-30"
                                     userWeaponTier = 5
+                                    userMinDmg = 10
+                                    userMaxDmg = 30
                                     break
                                 case "Stormyxový Meč":
                                     userDmg = "15-40"
                                     userWeaponTier = 6
+                                    userMinDmg = 15
+                                    userMaxDmg = 40
                                     break
                                 case "Mythrilový Meč":
                                     userDmg = "20-50"
                                     userWeaponTier = 7
+                                    userMinDmg = 20
+                                    userMaxDmg = 50
                                     break
                                 case "Adamantiový Meč":
                                     userDmg = "25-75"
                                     userWeaponTier = 8
+                                    userMinDmg = 25
+                                    userMaxDmg = 75
                                     break
                                 case "Orichalcový Meč":
                                     userDmg = "45-90"
                                     userWeaponTier = 9
+                                    userMinDmg = 45
+                                    userMaxDmg = 90
                                     break
                                 case "Nebeský Meč":
                                     userDmg = "60-100"
                                     userWeaponTier = 10
+                                    userMinDmg = 60
+                                    userMaxDmg = 100
                                     break
                             }
                             console.log("Nyní máš na svém opasku, připravený k boji " + userWeapon + ". S útočnou silou " + userDmg + " dmg.")
@@ -433,7 +449,233 @@ while (true) {
     
     // GATE
     } else if (loc === "gate") {
-        console.log("gate")
+    
+        // RANDOM RANDINT
+        function randint(min,max) {
+            let fromZero = min
+            min = 0
+            max -= fromZero
+            return Math.floor(Math.random()*(max+1)) + fromZero
+        }
+
+        // BATTLE FUNCTION
+        function battle(enemy) {
+            let monsterName = ""
+            let monsterHP = 0
+            let monsterGold = 0
+            let minDmg = 0
+            let maxDmg = 0
+            let userBattleDmg = 0
+            let bossMonster = false
+            let bossTier = 0
+            
+            // ENEMY SELECTION
+            switch(enemy) {
+                case "goblin":
+                    monsterName = "Goblin"
+                    monsterHP = 20
+                    monsterGold = 10
+                    minDmg = 2
+                    maxDmg = 4
+                    break
+                case "goblinLeader":
+                    monsterName = "Goblin Vůdce"
+                    monsterHP = 35
+                    monsterGold = 25
+                    minDmg = 3
+                    maxDmg = 10
+                    bossMonster = true
+                    bossTier = 1
+                    break
+                case "mummy":
+                    monsterName = "Mumie"
+                    monsterHP = 40
+                    monsterGold = 25
+                    minDmg = 3
+                    maxDmg = 15
+                    break
+                case "sandman":
+                    monsterName = "Písečný Muž"
+                    monsterHP = 60
+                    monsterGold = 50
+                    minDmg = 5
+                    maxDmg = 17
+                    bossMonster = true
+                    bossTier = 2
+                    break
+                case "iceGuardian":
+                    monsterName = "Ledový Ochránce"
+                    monsterHP = 65
+                    monsterGold = 50
+                    minDmg = 4
+                    maxDmg = 17
+                    break
+                case "iceKnight":
+                    monsterName = "Ledový Rytíř"
+                    monsterHP = 80
+                    monsterGold = 100
+                    minDmg = 6
+                    maxDmg = 20
+                    bossMonster = true
+                    bossTier = 3
+                    break
+                case "skeleton":
+                    monsterName = "Kostlivec"
+                    monsterHP = 85
+                    monsterGold = 125
+                    minDmg = 6
+                    maxDmg = 23
+                    break
+                case "skeletonKing":
+                    monsterName = "Král Kostlivců"
+                    monsterHP = 95
+                    monsterGold = 250
+                    minDmg = 9
+                    maxDmg = 25
+                    bossMonster = true
+                    bossTier = 4
+                    break
+                case "magmaMinion":
+                    monsterName = "Magma Minion"
+                    monsterHP = 100
+                    monsterGold = 250
+                    minDmg = 8
+                    maxDmg = 25
+                    break
+                case "magmaTrasher":
+                    monsterName = "Magma Trasher"
+                    monsterHP = 130
+                    monsterGold = 500
+                    minDmg = 10
+                    maxDmg = 30
+                    bossMonster = true
+                    bossTier = 5
+                    break
+                case "swampMonster":
+                    monsterName = "Bažinové Monstrum"
+                    monsterHP = 140
+                    monsterGold = 500
+                    minDmg = 10
+                    maxDmg = 30
+                    break
+                case "swampGuardian":
+                    monsterName = "Bažinový Ztrážce"
+                    monsterHP = 170
+                    monsterGold = 1000
+                    minDmg = 15
+                    maxDmg = 40
+                    bossMonster = true
+                    bossTier = 6
+                    break
+                case "orc":
+                    monsterName = "Orc"
+                    monsterHP = 175
+                    monsterGold = 1000
+                    minDmg = 15
+                    maxDmg = 45
+                    break
+                case "orcLeader":
+                    monsterName = "Orc Vojevůdce"
+                    monsterHP = 240
+                    monsterGold = 2000
+                    minDmg = 20
+                    maxDmg = 55
+                    bossMonster = true
+                    bossTier = 7
+                    break
+                case "cloudLurker":
+                    monsterName = "Cloud Lurker"
+                    monsterHP = 250
+                    monsterGold = 2000
+                    minDmg = 25
+                    maxDmg = 70
+                    break
+                case "cloudLord":
+                    monsterName = "Cloud Lord"
+                    monsterHP = 320
+                    monsterGold = 4000
+                    minDmg = 30
+                    maxDmg = 80
+                    bossMonster = true
+                    bossTier = 8
+                    break
+                case "vampire":
+                    monsterName = "Upír"
+                    monsterHP = 340
+                    monsterGold = 3000
+                    minDmg = 30
+                    maxDmg = 80
+                    break
+                case "vampireKing":
+                    monsterName = "Krák Upírů"
+                    monsterHP = 400
+                    monsterGold = 6000
+                    minDmg = 45
+                    maxDmg = 90
+                    bossMonster = true
+                    bossTier = 9
+                    break
+                case "corrupted":
+                    monsterName = "Corrupted One"
+                    monsterHP = 450
+                    monsterGold = 5000
+                    minDmg = 50
+                    maxDmg = 95
+                    break
+                case "corruptionLord":
+                    monsterName = "Corruption Lord"
+                    monsterHP = 800
+                    monsterGold = 10000
+                    minDmg = 60
+                    maxDmg = 100
+                    bossMonster = true
+                    bossTier = 10
+                    break
+            }
+            
+            // DMG GENERATION
+            function attackMonsterRNG(min,max) {
+                monsterDmg = randint(min,max)
+            }
+            function attackUserRNG(min,max) {
+                userBattleDmg = randint(min,max)
+            }
+
+            // ATTACKING
+            while (userHP > 0 && monsterHP > 0) {
+                attackMonsterRNG(minDmg, maxDmg)
+                attackUserRNG(userMinDmg, userMaxDmg)
+                userHP -= monsterDmg
+                monsterHP -= userBattleDmg
+                userHP = userHP < 0 ? 0 : userHP
+                monsterHP = monsterHP < 0 ? 0 : monsterHP
+                console.log(`Útočíš na ${monsterName} za ${userBattleDmg} dmg. Zbývá mu ${monsterHP} životů.`);
+                console.log(`${monsterName} na tebe útočí za ${monsterDmg} dmg. Zbývá ti ${userHP} životů.`);
+                alert("Zmáčkni Enter pro pokračování.")
+                console.log("")
+            }
+            if (userHP <= 0) {
+                if (hardMode === true) {
+                    console.log("Umřel jsi. Jelikož máš aktivovaný Hard Mode, tak se hra ukončí.")
+                    loc = "end"
+                } else {
+                    console.log("Umřel jsi. Budeš teleportován zpátky na spawn.")
+                    alert("Zmáčkni Enter pro pokračování.")
+                    userHP = userMaxHP
+                    console.log("")
+                    loc = "spawn"
+                }
+            } else {
+                console.log(`Porazil jsi ${monsterName}. Získáváš ${monsterGold} zlata.`)
+                alert("Zmáčkni Enter pro pokračování.")
+                console.log("")
+            }
+        }
+
+        battle("corruptionLord")
+
+    // HARD MORE DEATH
+    } else if (loc === "end") {
         break
     }
     
@@ -442,3 +684,4 @@ while (true) {
 }
 // credit: matěj - název brány + randint
 // vyřešit tier 10 kupování
+// menu - play, info, credits
