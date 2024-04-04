@@ -1,20 +1,22 @@
-let loc = "start";
+let loc = "menu";
+let subLoc = ""
 let shouldBreak = false
 let hardMode = false
+let corruptionCore = false
 
 // USER VARIABLES
 let name = ""
-let userGold = 99999999999999
+let userGold = 9999999999
 let userWeapon = "Dřevěný Meč"
-let userWeaponTier = 0;
+let userWeaponTier = 99;
 let userDmg = "2-5"
-let userMinDmg = 2
-let userMaxDmg = 5
-let userHP = 100
+let userMinDmg = 200
+let userMaxDmg = 300
+let userHP = 99999999999
 let userMaxHP = 100
 let userArmor = "Žádné"
 let userArmorBonus = 0
-let userArmorTier = 0;
+let userArmorTier = 99;
 let userRank = "Začátečník"
 
 // SHOP VARIABLES
@@ -27,9 +29,60 @@ let shopArmorPrice = 0;
 let shopArmorHealth = 0;
 
 
-alert("Otevři si konzoli. Pak se můžeš vrhnout do dobrodružství! [CTRL+SHIFT+C]");
+alert("Otevři si konzoli. Pak se můžeš vrhnout do dobrodružství! [CTRL+SHIFT+C, F12]");
 
 while (true) {
+    if (loc == "menu") {
+      
+        // MENU
+        console.log("Vítej v mé hře! Můžeš se rovnout vrhnout na hraní nebo si přečíst pár užitečných informací. Credits také nechybí.")
+        console.log("");
+        console.log("1. Hrát")
+        console.log("2. Informace");
+        console.log("3. Credits");
+        console.log("4. Vybírání Módu");
+        console.log("")
+        let menu = prompt("Co chceš udělat? [1, 2, 3, 4]");
+        if (menu == "1") {
+            console.log("Užij si hru!")
+            console.log("")
+            loc = "start"
+        } else if (menu == "2") {
+            console.log("Pár užitečných informací před začátkem hry:");
+            console.log("Ve hře je 10 zón, kterými hráč musí projít aby dokončil hru.")
+            console.log("Hráč může procházet zóny jak chce, ale nedoporučoval bych chodit do vyšších zón se špatným vybavením.")
+            console.log("")
+            console.log("V každé zóně je také Boss monstrum, které má šanci 1/3 na objevení. Pak má šanci 1/3, že uživatel dostane zbraň příslušné úrovně.")
+            console.log("");
+            console.log("Kdyby si chtěl ukončit hru v průběhu, stačí zadat špatnou odpověď na spawnu a hra se ukončí.")
+            console.log("")
+            alert("Zmáčkni Enter pro pokračování")
+        } else if (menu == "3") {
+            console.log("Adam: Jakžtakž všechno")
+            console.log("Matěj: Jméno brány a funkce randint")
+            console.log("")
+            alert("Zmáčkni Enter pro pokračování")
+        } else if (menu == "4") {
+            console.log("Je na výběr normální a těžký mód.")
+            console.log("Při normálním módu se hráč po smrti vždy oživí.")
+            console.log("V těžkém módu ale, se po smrti hra ukončí.")
+            console.log("")
+            let modeDecision = prompt("Chceš nechat normální mód nebo zapnout těžký mód? [1 - nechat, 2 - zapnout]")
+            if (modeDecision == "2") {
+                hardMode = true
+                console.log("Aktivoval jsi těžký mód.")
+                console.log("")
+                alert("Zmáčkni Enter pro pokračování")
+            } else if (modeDecision == "1" && hardMode === true) {
+                hardMode = false
+                console.log("Aktivoval jsi normální mód.")
+                console.log("")
+                alert("Zmáčkni Enter pro pokračování")
+            }
+        }
+    }
+
+    // START
     if (loc === "start") {
         name = prompt("Vítej dobroduhu! Sdělíš mi své jméno?");
         console.log("Zdravím tě, " + name + ". Doufám že si užiješ své dobrodružství!");
@@ -55,12 +108,12 @@ while (true) {
                 break
             case "3":
                 loc = "gate"
+                subLoc = "plains"
                 break
             case "4":
                 loc = "status"
                 break
             default:
-                console.log("Špatná odpověď.")
                 shouldBreak = true
                 break
         }
@@ -80,63 +133,73 @@ while (true) {
                 // WEAPON OFFERS
                 case "1":
                     console.log("Potřebujete nějakou zbraň? Drahý zákazníku. Hned vám něco dobrého nabídnu...")
-                    console.log("Aaaha! Tato zbraň je pro vás jako dělaná. Co vy na to?")
-                    console.log("")
-                    switch(userWeaponTier) {
-                        case 0:
-                            shopWeapon = "Bronzový Meč"
-                            shopWeaponPrice = 100
-                            shopWeaponDmg = "3-10"
-                            break
-                        case 1:
-                            shopWeapon = "Zlatý Meč"
-                            shopWeaponPrice = 250
-                            shopWeaponDmg = "5-15"
-                            break
-                        case 2:
-                            shopWeapon = "Železný Meč"
-                            shopWeaponPrice = 750
-                            shopWeaponDmg = "6-20"
-                            break
-                        case 3:
-                            shopWeapon = "Ocelový Meč"
-                            shopWeaponPrice = 2000
-                            shopWeaponDmg = "9-25"
-                            break
-                        case 4:
-                            shopWeapon = "Diamantový Meč"
-                            shopWeaponPrice = 5000
-                            shopWeaponDmg = "10-30"
-                            break
-                        case 5:
-                            shopWeapon = "Stormyxový Meč"
-                            shopWeaponPrice = 10000
-                            shopWeaponDmg = "15-40"
-                            break
-                        case 6:
-                            shopWeapon = "Mythrilový Meč"
-                            shopWeaponPrice = 25000
-                            shopWeaponDmg = "20-50"
-                            break
-                        case 7:
-                            shopWeapon = "Adamantiový Meč"
-                            shopWeaponPrice = 50000
-                            shopWeaponDmg = "25-75"
-                            break
-                        case 8:
-                            shopWeapon = "Orichalcový Meč"
-                            shopWeaponPrice = 80000
-                            shopWeaponDmg = "45-90"
-                            break
-                        case 9:
-                            shopWeapon = "Nebeský Meč"
-                            shopWeaponPrice = 125000
-                            shopWeaponDmg = "60-100"
-                            break
+                    if (userWeaponTier >= 10) {
+                        console.log("Bohužel, drahý zákazníku. Nemám vám už co nabídnout.")
+                        console.log("Jestli chcete, můžu vám ale nabídnout tento super krém na pleť z orcské krve, ve dnešní době to frčí...")
+                        console.log("")
+                        console.log("Jdeš zpátky na spawn.")
+                        alert("Zmáčkni Enter pro pokračování.")
+                        loc = "spawn"
+                        continue
+                    } else {
+                        console.log("Aaaha! Tato zbraň je pro vás jako dělaná. Co vy na to?")
+                        console.log("")
+                        switch(userWeaponTier) {
+                            case 0:
+                                shopWeapon = "Bronzový Meč"
+                                shopWeaponPrice = 100
+                                shopWeaponDmg = "3-10"
+                                break
+                            case 1:
+                                shopWeapon = "Zlatý Meč"
+                                shopWeaponPrice = 250
+                                shopWeaponDmg = "5-15"
+                                break
+                            case 2:
+                                shopWeapon = "Železný Meč"
+                                shopWeaponPrice = 750
+                                shopWeaponDmg = "6-20"
+                                break
+                            case 3:
+                                shopWeapon = "Ocelový Meč"
+                                shopWeaponPrice = 2000
+                                shopWeaponDmg = "9-25"
+                                break
+                            case 4:
+                                shopWeapon = "Diamantový Meč"
+                                shopWeaponPrice = 5000
+                                shopWeaponDmg = "10-30"
+                                break
+                            case 5:
+                                shopWeapon = "Stormyxový Meč"
+                                shopWeaponPrice = 10000
+                                shopWeaponDmg = "15-40"
+                                break
+                            case 6:
+                                shopWeapon = "Mythrilový Meč"
+                                shopWeaponPrice = 25000
+                                shopWeaponDmg = "20-50"
+                                break
+                            case 7:
+                                shopWeapon = "Adamantiový Meč"
+                                shopWeaponPrice = 50000
+                                shopWeaponDmg = "25-75"
+                                break
+                            case 8:
+                                shopWeapon = "Orichalcový Meč"
+                                shopWeaponPrice = 80000
+                                shopWeaponDmg = "45-90"
+                                break
+                            case 9:
+                                shopWeapon = "Nebeský Meč"
+                                shopWeaponPrice = 125000
+                                shopWeaponDmg = "60-100"
+                                break
+                        }
+                        console.log("Konstantin ti nabízí ... " + shopWeapon + ". Chceš si koupit " + shopWeapon + " za " + shopWeaponPrice + " zlatých?")
+                        console.log(shopWeapon + " útočí za " + shopWeaponDmg + " dmg.")
+                        console.log("")
                     }
-                    console.log("Konstantin ti nabízí ... " + shopWeapon + ". Chceš si koupit " + shopWeapon + " za " + shopWeaponPrice + " zlatých?")
-                    console.log(shopWeapon + " útočí za " + shopWeaponDmg + " dmg.")
-                    console.log("")
 
                     // WEAPON BUYING
                     let purchaseWeapon = prompt("Koupit zbraň? [1 - ano, 2 - ne]")
@@ -235,63 +298,73 @@ while (true) {
                 // ARMOR OFFERS
                 case "2":
                     console.log("Potřebujete nějaké brnění? Milostivý zákazníku. Hned vám něco skvělého najdu...")
-                    console.log("Noo jo! Tato zbroj je pro vás jako vyšitá. Co na ni říkáte?")
-                    console.log("")
-                    switch(userArmorTier) {
-                        case 0:
-                            shopArmor = "Kožené Brnění"
-                            shopArmorHealth = 50;
-                            shopArmorPrice = 50;
-                            break
-                        case 1:
-                            shopArmor = "Řetězové Brnění"
-                            shopArmorHealth = 100
-                            shopArmorPrice = 100
-                            break
-                        case 2:
-                            shopArmor = "Železné Brnění"
-                            shopArmorHealth = 175
-                            shopArmorPrice = 250
-                            break
-                        case 3:
-                            shopArmor = "Ocelové Brnění"
-                            shopArmorHealth = 250
-                            shopArmorPrice = 1500
-                            break
-                        case 4:
-                            shopArmor = "Diamantové Brnění"
-                            shopArmorHealth = 325
-                            shopArmorPrice = 5000
-                            break
-                        case 5:
-                            shopArmor = "Stormyxové Brnění"
-                            shopArmorHealth = 450
-                            shopArmorPrice = 15000
-                            break
-                        case 6:
-                            shopArmor = "Mythrilové Brnění"
-                            shopArmorHealth = 600
-                            shopArmorPrice = 40000
-                            break
-                        case 7:
-                            shopArmor = "Adamantiové Brnění"
-                            shopArmorHealth = 700
-                            shopArmorPrice = 100000
-                            break
-                        case 8:
-                            shopArmor = "Orichalcové Brnění"
-                            shopArmorHealth = 800
-                            shopArmorPrice = 150000
-                            break
-                        case 9:
-                            shopArmor = "Nebeské Brnění"
-                            shopArmorHealth = 1000
-                            shopArmorPrice = 200000
-                            break
+                    if (userArmorTier >= 10) {
+                        console.log("Bohužel, drahý zákazníku. Nemám vám už co nabídnout.")
+                        console.log("Jestli chcete, můžu vám ale nabídnout toto delikátní víno se špetkou magma trávy, ve dnešní době to frčí...")
+                        console.log("")
+                        console.log("Jdeš zpátky na spawn.")
+                        alert("Zmáčkni Enter pro pokračování.")
+                        loc = "spawn"
+                        continue
+                    } else {
+                        console.log("Noo jo! Tato zbroj je pro vás jako vyšitá. Co na ni říkáte?")
+                        console.log("")
+                        switch(userArmorTier) {
+                            case 0:
+                                shopArmor = "Kožené Brnění"
+                                shopArmorHealth = 50;
+                                shopArmorPrice = 50;
+                                break
+                            case 1:
+                                shopArmor = "Řetězové Brnění"
+                                shopArmorHealth = 100
+                                shopArmorPrice = 100
+                                break
+                            case 2:
+                                shopArmor = "Železné Brnění"
+                                shopArmorHealth = 175
+                                shopArmorPrice = 250
+                                break
+                            case 3:
+                                shopArmor = "Ocelové Brnění"
+                                shopArmorHealth = 250
+                                shopArmorPrice = 1500
+                                break
+                            case 4:
+                                shopArmor = "Diamantové Brnění"
+                                shopArmorHealth = 325
+                                shopArmorPrice = 5000
+                                break
+                            case 5:
+                                shopArmor = "Stormyxové Brnění"
+                                shopArmorHealth = 450
+                                shopArmorPrice = 15000
+                                break
+                            case 6:
+                                shopArmor = "Mythrilové Brnění"
+                                shopArmorHealth = 600
+                                shopArmorPrice = 40000
+                                break
+                            case 7:
+                                shopArmor = "Adamantiové Brnění"
+                                shopArmorHealth = 700
+                                shopArmorPrice = 100000
+                                break
+                            case 8:
+                                shopArmor = "Orichalcové Brnění"
+                                shopArmorHealth = 800
+                                shopArmorPrice = 150000
+                                break
+                            case 9:
+                                shopArmor = "Nebeské Brnění"
+                                shopArmorHealth = 1000
+                                shopArmorPrice = 200000
+                                break
+                        }
+                        console.log("Konstantin ti nabízí ... " + shopArmor + ". Chceš si koupit " + shopArmor + " za " + shopArmorPrice + " zlatých?")
+                        console.log(shopArmor + " ti přidává " + shopArmorHealth + " životů.")
+                        console.log("")
                     }
-                    console.log("Konstantin ti nabízí ... " + shopArmor + ". Chceš si koupit " + shopArmor + " za " + shopArmorPrice + " zlatých?")
-                    console.log(shopArmor + " ti přidává " + shopArmorHealth + " životů.")
-                    console.log("")
 
                     // ARMOR BUYING
                     let purchaseArmor = prompt("Koupit brnění? [1 - ano, 2 - ne]")
@@ -412,10 +485,10 @@ while (true) {
         console.log("")
         alert("Zmáčkni Enter pro pokračování.")
         loc = "spawn"
-        
+
      // STATUS   
     } else if (loc === "status") {
-        
+
         // RANK CHANGE
         if (userWeaponTier === 10 && userArmorTier === 10) {
             userRank = "Overlord"
@@ -428,13 +501,14 @@ while (true) {
         } else if (userWeaponTier >= 2 && userArmorTier >= 2) {
             userRank = "Dobrodruh"
         }
-        
+
         // STATUS LOG
         console.log("Otevřeš svůj status.")
         console.log("")
         console.log("Jméno: " + name)
         console.log("Hodnost: " + userRank)
         console.log("Body života: " + userHP + "/" + userMaxHP)
+        console.log("Zlato: " + userGold)
         console.log("")
         console.log("Používaná zbraň: " + userWeapon)
         console.log("Útočná síla: " + userDmg)
@@ -446,10 +520,10 @@ while (true) {
         console.log("")
         alert("Zmáčkni Enter pro pokračování.")
         loc = "spawn"
-    
+
     // GATE
     } else if (loc === "gate") {
-    
+
         // RANDOM RANDINT
         function randint(min,max) {
             let fromZero = min
@@ -468,7 +542,8 @@ while (true) {
             let userBattleDmg = 0
             let bossMonster = false
             let bossTier = 0
-            
+            let bossRNG = 0
+
             // ENEMY SELECTION
             switch(enemy) {
                 case "goblin":
@@ -632,13 +707,18 @@ while (true) {
                     bossTier = 10
                     break
             }
-            
+
             // DMG GENERATION
             function attackMonsterRNG(min,max) {
                 monsterDmg = randint(min,max)
             }
             function attackUserRNG(min,max) {
                 userBattleDmg = randint(min,max)
+            }
+
+            // BOSS DROP RNG
+            function bossDrop(min,max) {
+                bossRNG = randint(min,max)
             }
 
             // ATTACKING
@@ -651,8 +731,8 @@ while (true) {
                 monsterHP = monsterHP < 0 ? 0 : monsterHP
                 console.log(`Útočíš na ${monsterName} za ${userBattleDmg} dmg. Zbývá mu ${monsterHP} životů.`);
                 console.log(`${monsterName} na tebe útočí za ${monsterDmg} dmg. Zbývá ti ${userHP} životů.`);
-                alert("Zmáčkni Enter pro pokračování.")
                 console.log("")
+                alert("Zmáčkni Enter pro pokračování.")
             }
             if (userHP <= 0) {
                 if (hardMode === true) {
@@ -667,21 +747,373 @@ while (true) {
                 }
             } else {
                 console.log(`Porazil jsi ${monsterName}. Získáváš ${monsterGold} zlata.`)
-                alert("Zmáčkni Enter pro pokračování.")
+                userGold = userGold + monsterGold
+                if (monsterName === "Corruption Lord") {
+                    corruptionCore = true
+                }
                 console.log("")
+                if (bossMonster === true) {
+                    bossDrop(1,3)
+                    if (bossRNG === 1) {
+                        if (userWeaponTier < bossTier) {
+                          switch(bossTier) {
+                            case 1:
+                                userWeapon = "Bronzový Meč"
+                                userDmg = "3-10"
+                                userWeaponTier = 1
+                                userMinDmg = 3
+                               userMaxDmg = 10
+                                break
+                            case 2:
+                                userWeapon = "Zlatý Meč"
+                                userDmg = "5-15"
+                                userWeaponTier = 2
+                               userMinDmg = 5
+                                userMaxDmg = 15
+                                break
+                            case 3:
+                                userWeapon = "Železný Meč"
+                                userDmg = "6-20"
+                                userWeaponTier = 3
+                                userMinDmg = 6
+                                userMaxDmg = 20
+                                break
+                            case 4:
+                                userWeapon = "Ocelový Meč"
+                                userDmg = "9-25"
+                                userWeaponTier = 4
+                                userMinDmg = 9
+                                userMaxDmg = 25
+                                break
+                            case 5:
+                                userWeapon = "Diamantový Meč"
+                                userDmg = "10-30"
+                                userWeaponTier = 5
+                                userMinDmg = 10
+                                userMaxDmg = 30
+                                break
+                            case 6:
+                                userWeapon = "Stormyxový Meč"
+                                userDmg = "15-40"
+                                userWeaponTier = 6
+                                userMinDmg = 15
+                                userMaxDmg = 40
+                                break
+                            case 7:
+                                userWeapon = "Mythrilový Meč"
+                                userDmg = "20-50"
+                                userWeaponTier = 7
+                                userMinDmg = 20
+                                userMaxDmg = 50
+                                break
+                            case 8:
+                                userWeapon = "Adamantiový Meč"
+                                userDmg = "25-75"
+                                userWeaponTier = 8
+                                userMinDmg = 25
+                                userMaxDmg = 75
+                                break
+                            case 9:
+                                userWeapon = "Orichalcový Meč"
+                                userDmg = "45-90"
+                                userWeaponTier = 9
+                                userMinDmg = 45
+                                userMaxDmg = 90
+                                break
+                            case 10:
+                                userWeapon = "Nebeský Meč"
+                                userDmg = "60-100"
+                                userWeaponTier = 10
+                                userMinDmg = 60
+                                userMaxDmg = 100
+                                break
+                        }
+                        alert("Zmáčkni Enter pro pokračování.")
+                        console.log(`Získal jsi novou zbraň! ${userWeapon}, s útokem o ${userDmg} dmg.`)
+                        console.log("")
+                        }
+                    }
+                }
+                alert("Zmáčkni Enter pro pokračování.")
             }
         }
 
-        battle("corruptionLord")
+        // BOSS SPAWN RNG
+        let bossSpawned = false
+        function bossSpawn(min,max) {
+            let alfa = randint(min,max)
+            if (alfa === 1) {
+                bossSpawned = true
+            }
+        }
 
-    // HARD MORE DEATH
+        // BOSS / NORMAL MONSTER
+        function monsterBattle(normal,boss) {
+            bossSpawn(1,3)
+            if (bossSpawned === true) {
+                console.log("Pozor! Objevilo se Boss monstrum.")
+                battle(boss)
+            } else {
+              battle(normal)
+            }
+        }
+
+        // PLAINS
+        if (subLoc === "plains") {
+            console.log("Rozhlédneš se kolem sebe, kam tě brána transportovala.")
+            console.log("Ocitáš se na pláni. O podál zahlédneš skupinku Goblinů.")
+            console.log("")
+            let plainsDecision = prompt("Co uděláš? [1 - Bojovat s Goblinem, 2 - Další Zóna, 3 - Teleportace na Spawn]")
+            if (plainsDecision === "1") {
+                 monsterBattle("goblin","goblinLeader")
+            } else if (plainsDecision === "2") {
+                  console.log("Teleportuješ se do další zóny...")
+                  console.log("")
+                  alert("Zmáčkni Enter pro pokračování.")
+                  subLoc = "desert"
+            } else if (plainsDecision === "3") {
+                  console.log("Teleportuješ se na spawn...")
+                  console.log("")
+                  alert("Zmáčkni Enter pro pokračování.")
+                  loc = "spawn"
+                  subLoc = ""
+            }
+        }
+
+        // DESERT
+        if (subLoc === "desert") {
+            console.log("Díváš se kolem sebe. Oslepí tě žhnoucí slunce. Nyní se ocitáš v poušti.")
+            console.log("")
+            let desertDecision = prompt("Co uděláš? [1 - Bojovat s Mumií, 2 - Další Zóna, 3 - Teleportace na Spawn]")
+            if (desertDecision === "1") {
+                monsterBattle("mummy","sandman")
+            } else if (desertDecision === "2") {
+                console.log("Teleportuješ se do další zóny...")
+                console.log("")
+                alert("Zmáčkni Enter pro pokračování.")
+                subLoc = "iceLands"
+            } else if (desertDecision === "3") {
+                console.log("Teleportuješ se na spawn...")
+                console.log("")
+                alert("Zmáčkni Enter pro pokračování.")
+                loc = "spawn"
+                subLoc = ""
+            }
+        }
+
+        // ICELANDS
+        if (subLoc === "iceLands") {
+            console.log("Sleduješ své okolí. Začíná ti být lehce zima, nyní ses ocitl v mrazivé pustině.")
+            console.log("")
+            let iceLandsDecision = prompt("Co uděláš? [1 - Bojovat s Ledovým Ochráncem, 2 - Další Zóna, 3 - Teleportace na Spawn]")
+            if (iceLandsDecision === "1") {
+                monsterBattle("iceGuardian","iceKnight")
+            } else if (iceLandsDecision === "2") {
+                console.log("Teleportuješ se do další zóny...")
+                console.log("")
+                alert("Zmáčkni Enter pro pokračování.")
+                subLoc = "skeletonCastle"
+            } else if (iceLandsDecision === "3") {
+                console.log("Teleportuješ se na spawn...")
+                console.log("")
+                alert("Zmáčkni Enter pro pokračování.")
+                loc = "spawn"
+                subLoc = ""
+            }
+        }
+
+        // SKELETON CASTLE
+        if (subLoc === "skeletonCastle"){
+            console.log("Rozhlédneš se. Překvapí tě náhlá změna prostředí. Nacházíš se v nějakém hradě.");
+            console.log("")
+            let skeletonCastleDecision = prompt("Co uděláš? [1 - Bojovat s Kostlivcem, 2 - Další Zóna, 3 - Teleportace na Spawn]")
+            if (skeletonCastleDecision === "1") {
+              monsterBattle("skeleton","skeletonKing")
+            } else if (skeletonCastleDecision === "2") {
+                console.log("Teleportuješ se do další zóny...")
+                console.log("")
+                alert("Zmáčkni Enter pro pokračování.")
+                subLoc = "magmaLands"
+            } else if (skeletonCastleDecision === "3") {
+                console.log("Teleportuješ se na spawn...")
+                console.log("")
+                alert("Zmáčkni Enter pro pokračování.")
+                loc = "spawn"
+                subLoc = ""
+            }
+        }
+
+        // MAGMA LANDS
+        if (subLoc === "magmaLands") {
+            console.log("Ihned ti začne být teplo. Po chvíli zjistíš že se nacházíš v nějaké magmové pustině.");
+            console.log("")
+            let magmaLandsDecision = prompt("Co uděláš? [1 - Bojovat s Magma Minionem, 2 - Další Zóna, 3 - Teleportace na Spawn]")
+            if (magmaLandsDecision === "1") {
+              monsterBattle("magmaMinion","magmaTrasher")
+            } else if (magmaLandsDecision === "2") {
+                console.log("Teleportuješ se do další zóny...")
+                console.log("")
+                alert("Zmáčkni Enter pro pokračování.")
+                subLoc = "swamp"
+            } else if (magmaLandsDecision === "3") {
+                console.log("Teleportuješ se na spawn...")
+                console.log("")
+                alert("Zmáčkni Enter pro pokračování.")
+                loc = "spawn"
+                subLoc = ""
+            }
+        }
+
+        // SWAMP
+        if (subLoc === "swamp") {
+            console.log("Z hořlavé pustiny se přesouváš do husté bažiny. Všude voda a bahno.");
+            console.log("")
+            let swampDecision = prompt("Co uděláš? [1 - Bojovat s Bažinovým monstrem, 2 - Další Zóna, 3 - Teleportace na Spawn]")
+            if (swampDecision === "1") {
+                monsterBattle("swampMonster","swampGuardian")
+            } else if (swampDecision === "2") {
+                console.log("Teleportuješ se do další zóny...")
+                console.log("")
+                alert("Zmáčkni Enter pro pokračování.")
+                subLoc = "orcCastle"
+            } else if (swampDecision === "3") {
+                console.log("Teleportuješ se na spawn...")
+                console.log("")
+                alert("Zmáčkni Enter pro pokračování.")
+                loc = "spawn"
+                subLoc = ""
+            }
+        }
+
+        // ORC CASTLE
+        if (subLoc === "orcCastle") {
+            console.log("Nacházíš se v dalším hradě, tentokrát vypadá o hodně vyspějejší.");
+            console.log("")
+            let orcCastleDecision = prompt("Co uděláš? [1 - Bojovat s Orcem, 2 - Další Zóna, 3 - Teleportace na Spawn]")
+            if (orcCastleDecision === "1") {
+                monsterBattle("orc","orcLeader")
+            } else if (orcCastleDecision === "2") {
+                console.log("Teleportuješ se do další zóny...")
+                console.log("")
+                alert("Zmáčkni Enter pro pokračování.")
+                subLoc = "clouds"
+            } else if (orcCastleDecision === "3") {
+                console.log("Teleportuješ se na spawn...")
+                console.log("")
+                alert("Zmáčkni Enter pro pokračování.")
+                loc = "spawn"
+                subLoc = ""
+            }
+        }
+
+        // CLOUDS
+        if (subLoc === "clouds") {
+            console.log("Ocitáš se zase v novém prostředí. Tentokrát to vypadá že si někde hodně vysoko v mracích.");
+            console.log("")
+            let cloudsDecision = prompt("Co uděláš? [1 - Bojovat s Cloud Lurkerem, 2 - Další Zóna, 3 - Teleportace na Spawn]")
+            if (cloudsDecision === "1") {
+                monsterBattle("cloudLurker","cloudLord")
+            } else if (cloudsDecision === "2") {
+                console.log("Teleportuješ se do další zóny...")
+                console.log("")
+                alert("Zmáčkni Enter pro pokračování.")
+                subLoc = "vampireForest"
+            } else if (cloudsDecision === "3") {
+                console.log("Teleportuješ se na spawn...")
+                console.log("")
+                alert("Zmáčkni Enter pro pokračování.")
+                loc = "spawn"
+                subLoc = ""
+            }
+        }
+
+        // VAMPIRE FOREST
+        if (subLoc === "vampireForest") {
+            console.log("Ocitáš se v před poslední zóně tvé cesty. Vypadá to na hustý, temný les. Všude jde cítit krev.");
+            console.log("")
+            let vampireForestDecision = prompt("Co uděláš? [1 - Bojovat s Upírem, 2 - Další Zóna, 3 - Teleportace na Spawn]")
+            if (vampireForestDecision === "1") {
+                monsterBattle("vampire","vampireKing")
+            } else if (vampireForestDecision === "2") {
+                console.log("Teleportuješ se do další zóny...")
+                console.log("")
+                alert("Zmáčkni Enter pro pokračování.")
+                subLoc = "corruptionZone"
+            } else if (vampireForestDecision === "3") {
+                console.log("Teleportuješ se na spawn...")
+                console.log("")
+                alert("Zmáčkni Enter pro pokračování.")
+                loc = "spawn"
+                subLoc = ""
+            }
+        }
+
+        // CORRUPTION ZONE
+        if (subLoc === "corruptionZone") {
+            console.log("Došel jsi do poslední zóny brány. Temné fialové prostředí se rozléhá kolem tebe.")
+            console.log("")
+            let corruptionZoneDecision = prompt("Co uděláš? [1 - Bojovat s Corrupted One, 2 - Oltář..?, 3 - Teleportace na Spawn]")
+            if (corruptionZoneDecision === "1") {
+                monsterBattle("corrupted","corruptionLord")
+            } else if (corruptionZoneDecision === "2") {
+                console.log("Zahlédneš Oltář a rozhodneš se jít k němu...")
+                console.log("")
+                alert("Zmáčkni Enter pro pokračování.")
+                subLoc = "Altar"
+            } else if (corruptionZoneDecision === "3") {
+                console.log("Teleportuješ se na spawn...")
+                console.log("")
+                alert("Zmáčkni Enter pro pokračování.")
+                loc = "spawn"
+                subLoc = ""
+            }
+        }
+
+        // ALTAR
+        if (subLoc === "Altar") {
+            console.log("Dorazil jsi ke svému cili. Podvědomě tě to sem přitahovalo celou dobu.")
+            console.log("")
+            if (corruptionCore === true) {
+                console.log("Vytáhneš Corruption Core, který si získal dřív.")
+                console.log("Přesně zapadá do kulaté díry v oltáři. Oltář začne zářit..")
+                alert("Zmáčkni Enter pro pokračování.")
+                console.log("")
+                console.log("Všude kolem tebe je bílo. Pod sebou vidíš všechny zóny, kterými jsi prošel až sem. I samotnou Portu Magnificu.")
+                console.log("Která se začne pomalu rozpadat.. Její cíl byl dokončen. Je na čase ukončit tuto cestu. A začít novou..")
+                alert("Zmáčkni Enter pro pokračování.")
+                console.log("")
+                loc = "postEnd"
+                subLoc = ""
+            } else {
+                console.log("Na oltáři si všimneš kulatého otvoru. Nemáš ovšem nic co by do něho pasovalo.")
+                console.log("Rozhodneš se tedy vrátit zpět.")
+                console.log("")
+                alert("Zmáčkni Enter pro pokračování.")
+                subLoc = "corruptionZone"
+            }
+        }
+      
+    // HARD MODE DEATH
     } else if (loc === "end") {
         break
+
+    // ENDGAME CREDITS
+    } else if (loc === "postEnd") {
+          console.log("Děkuji za dohrání hry! Doufám že sis ji užil a těším se na tebe u další mé hry.")
+          console.log("Jestli chceš ještě pokračovat ve hře, třeba dokoupit vybavení 10 úrovně, tak máš poslední možnost.");
+          console.log("")
+          let finalDecision = prompt("Pokračovat? [1 - Ano, 2 - Ne]")
+          if (finalDecision === "1") {
+              console.log("Hodně štěstí na tvém dobrodružství!")
+              console.log("")
+              alert("Zmáčkni Enter pro pokračování.")
+              loc = "spawn"
+          } else {
+              console.log("Tak se měj a hodně štěstí ve tvých budoucích dobrodružstvích!")
+              break
+          }
     }
-    
-    
+
+
 
 }
-// credit: matěj - název brány + randint
-// vyřešit tier 10 kupování
-// menu - play, info, credits
