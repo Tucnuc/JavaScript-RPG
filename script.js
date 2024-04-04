@@ -6,17 +6,17 @@ let corruptionCore = false
 
 // USER VARIABLES
 let name = ""
-let userGold = 9999999999
+let userGold = 0
 let userWeapon = "Dřevěný Meč"
-let userWeaponTier = 99;
+let userWeaponTier = 0;
 let userDmg = "2-5"
-let userMinDmg = 200
-let userMaxDmg = 300
-let userHP = 99999999999
+let userMinDmg = 2
+let userMaxDmg = 5
+let userHP = 100
 let userMaxHP = 100
 let userArmor = "Žádné"
 let userArmorBonus = 0
-let userArmorTier = 99;
+let userArmorTier = 0;
 let userRank = "Začátečník"
 
 // SHOP VARIABLES
